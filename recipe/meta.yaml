@@ -1,28 +1,27 @@
 {% set name = "linkify-it-py" %}
-{% set version = "2.0.0" %}
+{% set version = "2.0.3" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 476464480906bed8b2fa3813bf55566282e55214ad7e41b7d1c2b564666caf2f
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 68cda27e162e9215c17d786649d1da0021a451bdc436ef9e0fa0ba5234b9b048
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv
-  skip: True  # [py<36]
+  skip: true  # [py<37]
 
 requirements:
   host:
     - pip
     - setuptools
-    - wheel
     - python
   run:
     - python
-    - uc-micro-py >=1.0.1,<2.0.0
+    - uc-micro-py
 
 test:
   imports:
