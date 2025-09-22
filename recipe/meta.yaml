@@ -11,28 +11,42 @@ source:
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: true  # [py<37]
 
 requirements:
   host:
+    - python
     - pip
     - setuptools
-    - python
   run:
     - python
     - uc-micro-py
 
 test:
+  source_files:
+    - test
   imports:
     - linkify_it
+    - linkify_it.main
+    - linkify_it.tlds
+  requires:
+    - pip
+    - pytest
+  commands:
+    - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest -v test
 
 about:
   home: https://github.com/tsutsu3/linkify-it-py
   license: MIT
   license_family: MIT
   license_file: LICENSE
-  summary: Links recognition library with FULL unicode support.
+  summary: Links recognition library with FULL unicode support. Focused on high quality link patterns detection in plain text.
+  description: Links recognition library with FULL unicode support. Focused on high quality link patterns detection in plain text.
+  doc_url: https://linkify-it-py.readthedocs.io
+  dev_url: https://github.com/tsutsu3/linkify-it-py
 
 extra:
   recipe-maintainers:
